@@ -40,10 +40,10 @@ pip install -r requirements.txt
 ```
 alphatoken/
 ├── src/
-│   ├── fisher.py        # Diagonal Monte-Carlo Fisher F_ref  (Eq. 5)
-│   ├── scoring.py       # Hook manager + AlphaTokenScorer (Eqs. 8/9/11/12)
-│   ├── sft_trainer.py   # Value-aware SFT loop (Algorithm 1 / Eq. 13)
-│   └── dpo_trainer.py   # Value-aware DPO loop (Algorithm 1 / Eq. 14)
+│   ├── fisher.py        # Diagonal Monte-Carlo Fisher F_ref
+│   ├── scoring.py       # Hook manager + AlphaTokenScorer
+│   ├── sft_trainer.py   # Value-aware SFT loop
+│   └── dpo_trainer.py   # Value-aware DPO loop
 ├── train_sft.py         # SFT entry point
 ├── train_dpo.py         # DPO entry point
 ├── scripts/
@@ -86,7 +86,7 @@ SFT_WARMSTART_PATH=...  # UltraChat-200K warm-start checkpoint (= policy init = 
 PREF_DATA_PATH=...      # preference triples {"prompt", "chosen", "rejected"}
 VAL_SFT_DATA_PATH=...   # SFT-format examples drawn from the SAME UltraFeedback
                         # distribution, excluded from preference optimization;
-                        # used only for validation-side scoring signals (Eq. 8/9)
+                        # used only for validation-side scoring signals
 OUTPUT_DIR=...
 ```
 
