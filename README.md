@@ -6,13 +6,11 @@
 
 ## Core Innovations of AlphaToken
 
-- **Path-Aware Decoupled Token Valuation:** We formulate response token valuation by decoupling adaptation and retention stability, and make it path-aware by modeling both the local update gradient and the downstream causal-path signal. The inaccessible retention gradient is replaced by a Fisher-weighted drift proxy anchored at the pre-trained reference, giving four interpretable components: direct/causal target alignment and direct/causal retention proxy (Eq. 12).
+- **Decoupled and Path-Aware Response Token Valuation:** We formulate response token valuation by decoupling adaptation and retention stability, and make each objective path-aware by modeling both local update signals and downstream causal-path effects. Since the retention gradient is typically inaccessible, AlphaToken replaces it with a Fisher-weighted drift proxy anchored at the pre-trained reference model.
 
-- **Ghost Dot-Product Family at Token Level:** Building on Ghost Dot-Product for sample-level gradient alignment, we extend it to token-level valuation by supporting causal cross-position alignment through a **Value-Propagation** approximation (retaining only the dominant `W_V` channel) and Fisher-drift stability through a new **Activation–Parameter contraction**. All four scores reuse one cached forward/backward pass and cost the same O(T·d_in·d_out) per layer as the activation–activation case — far below the O(T·|θ|) baseline.
+- **Token-Level Ghost Dot-Product Valuation:** Building on Ghost Dot-Product for sample-level gradient alignment, we extend it to token-level valuation. The framework supports causal cross-position alignment through a Value-Propagation approximation and computes Fisher-drift stability through an Activation–Parameter contraction.
 
-- **Theoretical Guarantees with Data-Free Retention:** The cross-position Jacobian approximation incurs a controlled O(1/√d_h) operator-norm error that vanishes under sparse or saturated attention. The Fisher-drift proxy's discrepancy from the true retention gradient is bounded by a first-order residual at the reference checkpoint, a Fisher–Hessian mismatch (calibration gap + Wasserstein distance), and a third-order remainder suppressed by value-aware masking — none of which requires expectations over the unobserved retention data.
-
-- **Comprehensive Empirical Validation:** Using the composite valuation scores, AlphaToken masks low-utility response tokens for both Standard FT and preference optimization. Across Llama-3.2-3B, Gemma-3-4B, and Qwen-3.5-9B backbones, AlphaToken consistently improves the adaptation–retention trade-off and mitigates catastrophic forgetting on both SFT (Magicoder → HumanEval) and DPO (UltraFeedback → AlpacaEval2 / Arena-Hard).
+- **Value-Aware Post-Training for SFT and Preference Optimization:** Using the composite token values, AlphaToken masks low-utility response tokens during both standard fine-tuning and preference optimization. This concentrates training signals on more valuable positions and improves the adaptation–retention trade-off across multiple LLM backbones.
 
 ## Requirements
 
